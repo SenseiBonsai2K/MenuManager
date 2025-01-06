@@ -10,17 +10,6 @@ namespace MenuManager.Models.Entities
     {
         public int Id { get; set; }
         public string Type { get; set; }
-
-
-        public DishType()
-        {
-
-        }
-
-        public DishType(int id, string type)
-        {
-            this.Id = id;
-            this.Type = type;
-        }
+        public virtual ICollection<Dish> Dishes { get; set; }
     }
 }

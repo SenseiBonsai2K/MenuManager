@@ -25,7 +25,6 @@ namespace MenuManager
 
             app.UseAuthorization();
 
-
             app.MapControllers();
 
             app.Run();
