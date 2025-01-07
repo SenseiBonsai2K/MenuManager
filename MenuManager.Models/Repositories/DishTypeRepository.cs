@@ -17,6 +17,11 @@ namespace MenuManager.Models.Repositories
         {
             this.context = context;
         }
+        public async Task<IEnumerable<DishType>> GetAllAsync()
+        {
+            return await context.DishTypes.ToListAsync();
+        }
+
         public async Task<DishType> GetByTypologyAsync(string type)
             {
                 return await context.DishTypes.FirstOrDefaultAsync(t => t.Type == type);

@@ -11,11 +11,16 @@ namespace MenuManager.Models.Repositories
 {
     public class DishRepository 
     {
-        public MyDbContext context;
+        public readonly MyDbContext context;
 
         public DishRepository(MyDbContext context)
         {
             this.context = context;
+        }
+
+        public async Task <IEnumerable<Dish>> GetAllAsync()
+        {
+            return await context.Dishes.ToListAsync();
         }
 
         public async Task<IEnumerable<Dish>> GetByTypologyAsync(string type)
@@ -46,6 +51,5 @@ namespace MenuManager.Models.Repositories
         {
             return await context.Dishes.Where(d => d.Name.ToLower() == name.ToLower()).ToListAsync();
         }
-
     }
 }
