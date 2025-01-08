@@ -22,5 +22,10 @@ namespace MenuManager.Models.Repositories
         {
             return await _context.DishTypes.AnyAsync(t => t.Type == name);
         }
+
+        public async Task AddDishType(DishType dishType)
+        {
+            await _context.DishTypes.AddAsync(dishType);
+        }
     }
 }

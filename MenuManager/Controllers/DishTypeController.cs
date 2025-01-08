@@ -1,5 +1,7 @@
 ﻿using MenuManager.DTOs;
 using MenuManager.Models.Repositories;
+using MenuManager.Requests;
+using MenuManager.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MenuManager.Controllers
@@ -8,11 +10,13 @@ namespace MenuManager.Controllers
     [ApiController]
     public class DishTypeController : Controller
     {
-        private readonly DishTypeRepository _dishTypeContext;
+        //private readonly DishServices _dishServices;
+        private readonly DishTypeServices _dishTypeServices;
 
-        public DishTypeController(DishTypeRepository context)
+        public DishTypeController(DishTypeServices dishTypeServices)
         {
-            _dishTypeContext = context;
+            //_dishServices = dishServices;
+            _dishTypeServices = dishTypeServices;
         }
 
         // GET: api/DishType
@@ -20,11 +24,27 @@ namespace MenuManager.Controllers
         public async Task<ActionResult<List<DishTypeDTO>>> GetAllDishTypes()
         {
             var dishTypes = new List<DishTypeDTO>();
-            foreach (var types in await _dishTypeContext.GetAll())
+            foreach (var types in await _dishTypeServices.GetAllDishTypes())
             {
                 dishTypes.Add(new DishTypeDTO(types));
             }
             return Ok(dishTypes);
+        }
+
+        // POST: api/DishType/AddDishType
+        [HttpPost("AddDishType")]
+        public async Task<ActionResult> AddDishType([FromBody] DishTypeAddRequest dishTypeAddRequest)
+        {
+            var dishType = dishTypeAddRequest.ToEntity();
+            try
+            {
+                await _dishTypeServices.AddDishType(dishType);
+            }
+            catch (InvalidOperationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            return Ok(dishType.Type + " Added");
         }
     }
 }
