@@ -6,12 +6,12 @@ namespace MenuManager.Services
 {
     public class DishTypeServices
     {
-        //public readonly DishRepository dishRepository;
+        public readonly DishRepository dishRepository;
         public readonly DishTypeRepository dishTypeRepository;
 
-        public DishTypeServices(DishTypeRepository dishTypeRepository)
+        public DishTypeServices(DishRepository dishRepository, DishTypeRepository dishTypeRepository)
         {
-            //this.dishRepository = dishRepository;
+            this.dishRepository = dishRepository;
             this.dishTypeRepository = dishTypeRepository;
         }
 
@@ -22,8 +22,25 @@ namespace MenuManager.Services
 
         public async Task AddDishType(DishType dishType)
         {
+            if(await dishTypeRepository.TypeExistsByName(dishType.Type)) 
+            { 
+                throw new InvalidOperationException("A DishType with the same type already exists."); 
+            }
             await dishTypeRepository.AddDishType(dishType);
             await dishTypeRepository.SaveChanges();
         }
+
+        public async Task DeleteDishType(int id)
+        {
+            var dishes = await dishRepository.GetDishesByTypeId(id);
+            var dishType = await dishTypeRepository.GetById(id);
+            if(dishes.Any())
+            {
+                throw new InvalidOperationException("DishType is in use");
+            }
+            dishTypeRepository.Delete(dishType);
+            await dishTypeRepository.SaveChanges();
+        }
+
     }
 }

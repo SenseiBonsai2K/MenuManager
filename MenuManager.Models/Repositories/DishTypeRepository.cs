@@ -13,14 +13,9 @@ namespace MenuManager.Models.Repositories
 
         public DishTypeRepository(MyDbContext _context) : base(_context) { }
 
-        public async Task<DishType> GetByType(string type)
+        public async Task<bool> TypeExistsByName(string type)
         {
-            return await _context.DishTypes.FirstOrDefaultAsync(t => t.Type == type);
-        }
-
-        public async Task<bool> TypeExistsByName(string name)
-        {
-            return await _context.DishTypes.AnyAsync(t => t.Type == name);
+            return await _context.DishTypes.AnyAsync(t => t.Type == type);
         }
 
         public async Task AddDishType(DishType dishType)

@@ -13,17 +13,17 @@ namespace MenuManager.Models.Repositories
     {
         public DishRepository(MyDbContext _context) : base(_context) { }
 
-        public async Task<IEnumerable<Dish>> GetByType(string type)
+        public async Task<IEnumerable<Dish>> GetDishesByType(string type)
         {
             return await _context.Dishes.Where(d => d.Type.Type.ToLower() == type.ToLower()).ToListAsync();
         }
 
-        public async Task<IEnumerable<Dish>> GetByTypeId(int typeId)
+        public async Task<IEnumerable<Dish>> GetDishesByTypeId(int typeId)
         {
             return await _context.Dishes.Where(d => d.Type.Id == typeId).ToListAsync();
         }
 
-        public async Task<IEnumerable<Dish>> GetByName(string name)
+        public async Task<IEnumerable<Dish>> GetDishesByName(string name)
         {
             return await _context.Dishes.Where(d => d.Name.ToLower() == name.ToLower()).ToListAsync();
         }

@@ -54,7 +54,7 @@ namespace MenuManager.Controllers
             {
                 return BadRequest(e.Message);
             }
-            return Ok(dish.Name + "Added");
+            return Ok(dish.Name + " Added");
         }
 
         // DELETE: api/Dish/DeleteDish

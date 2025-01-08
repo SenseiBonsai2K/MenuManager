@@ -10,13 +10,13 @@ namespace MenuManager.Controllers
     [ApiController]
     public class DishTypeController : Controller
     {
-        //private readonly DishServices _dishServices;
-        private readonly DishTypeServices _dishTypeServices;
+        private readonly DishServices dishServices;
+        private readonly DishTypeServices dishTypeServices;
 
-        public DishTypeController(DishTypeServices dishTypeServices)
+        public DishTypeController(DishServices dishServices, DishTypeServices dishTypeServices)
         {
-            //_dishServices = dishServices;
-            _dishTypeServices = dishTypeServices;
+            this.dishServices = dishServices;
+            this.dishTypeServices = dishTypeServices;
         }
 
         // GET: api/DishType
@@ -24,7 +24,7 @@ namespace MenuManager.Controllers
         public async Task<ActionResult<List<DishTypeDTO>>> GetAllDishTypes()
         {
             var dishTypes = new List<DishTypeDTO>();
-            foreach (var types in await _dishTypeServices.GetAllDishTypes())
+            foreach (var types in await dishTypeServices.GetAllDishTypes())
             {
                 dishTypes.Add(new DishTypeDTO(types));
             }
@@ -38,13 +38,28 @@ namespace MenuManager.Controllers
             var dishType = dishTypeAddRequest.ToEntity();
             try
             {
-                await _dishTypeServices.AddDishType(dishType);
+                await dishTypeServices.AddDishType(dishType);
             }
             catch (InvalidOperationException e)
             {
                 return BadRequest(e.Message);
             }
             return Ok(dishType.Type + " Added");
+        }
+
+        // DELETE: api/DishType/DeleteDishType
+        [HttpDelete("DeleteDishType")]
+        public async Task<ActionResult> DeleteDishType(int id)
+        {
+            try
+            {
+                await dishTypeServices.DeleteDishType(id);
+            }
+            catch (InvalidOperationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            return Ok("DishType Deleted");
         }
     }
 }

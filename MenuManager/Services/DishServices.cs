@@ -21,6 +21,11 @@ namespace MenuManager.Services
 
         public async Task AddDish(Dish dish)
         {
+            var existingDishes = await dishRepository.GetDishesByName(dish.Name);
+            if (existingDishes.Any())
+            {
+                throw new InvalidOperationException("A Dish with the same name already exists.");
+            }
             dishRepository.AddDish(dish);
             await dishRepository.SaveChanges();
         }
