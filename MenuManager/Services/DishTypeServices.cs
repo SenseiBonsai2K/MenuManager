@@ -1,6 +1,7 @@
 ﻿using MenuManager.Models.Entities;
 using MenuManager.Models.Repositories;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc.TagHelpers.Cache;
 
 namespace MenuManager.Services
 {
@@ -18,6 +19,28 @@ namespace MenuManager.Services
         public async Task<IEnumerable<DishType>> GetAllDishTypes()
         {
             return await dishTypeRepository.GetAll();
+        }
+
+        public async Task<DishType> GetDishTypeById(int id)
+        {
+            var dishType = await dishTypeRepository.GetById(id);
+            if (dishType == null)
+            {
+                throw new InvalidOperationException("Dish type not found");
+            }
+            return dishType;
+        }
+
+        public async Task AddDishToTipologyAsync(int dishTypeId, int dishId)
+        {
+            var dishType = await GetDishTypeById(dishTypeId);
+            var dish = await dishRepository.GetById(dishId);
+            if (dish == null)
+            {
+                throw new InvalidOperationException("Dish not found");
+            }
+            dishType.Dishes.Add(dish);
+            await dishTypeRepository.SaveChanges();
         }
 
         public async Task AddDishType(DishType dishType)
@@ -39,6 +62,18 @@ namespace MenuManager.Services
                 throw new InvalidOperationException("DishType is in use");
             }
             dishTypeRepository.Delete(dishType);
+            await dishTypeRepository.SaveChanges();
+        }
+
+        public async Task UpdateDishType(int Id, DishType dishType)
+        {
+            var dishTypeToUpdate = await dishTypeRepository.GetById(Id);
+            if (await dishTypeRepository.TypeExistsByName(dishType.Type))
+            {
+                throw new InvalidOperationException("A DishType with the same type already exists.");
+            }
+            dishTypeToUpdate.Type = dishType.Type;
+            await dishTypeRepository.UpdateDishType(dishTypeToUpdate);
             await dishTypeRepository.SaveChanges();
         }
 

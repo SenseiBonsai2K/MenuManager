@@ -1,5 +1,6 @@
 ﻿using MenuManager.Models.Entities;
 using MenuManager.Models.Repositories;
+using MenuManager.Requests;
 
 namespace MenuManager.Services
 {
@@ -26,7 +27,7 @@ namespace MenuManager.Services
             {
                 throw new InvalidOperationException("A Dish with the same name already exists.");
             }
-            dishRepository.AddDish(dish);
+            await dishRepository.AddDish(dish);
             await dishRepository.SaveChanges();
         }
 
@@ -34,6 +35,21 @@ namespace MenuManager.Services
         {
             var dish = await dishRepository.GetById(id);
             dishRepository.Delete(dish);
+            await dishRepository.SaveChanges();
+        }
+
+        public async Task UpdateDish(int Id, Dish dish)
+        {
+            var dishToUpdate = await dishRepository.GetById(Id);
+            var existingDishes = await dishRepository.GetDishesByName(dish.Name);
+            if (existingDishes.Count()>1)
+            {
+                throw new InvalidOperationException("A Dish with the same name already exists.");
+            } 
+            dishToUpdate.Name = dish.Name;
+            dishToUpdate.Price = dish.Price;
+            dishToUpdate.Id = dish.Id;
+            await dishRepository.UpdateDish(dishToUpdate);
             await dishRepository.SaveChanges();
         }
     }

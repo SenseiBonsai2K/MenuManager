@@ -22,5 +22,10 @@ namespace MenuManager.Models.Repositories
         {
             await _context.DishTypes.AddAsync(dishType);
         }
+
+        public async Task UpdateDishType(DishType dishType)
+        {
+            _context.DishTypes.Update(dishType);
+        }
     }
 }

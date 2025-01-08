@@ -71,5 +71,22 @@ namespace MenuManager.Controllers
             }
             return Ok("Dish Deleted");
         }
+
+        // PUT: api/Dish/UpdateDish
+        [HttpPut("UpdateDish")]
+        public async Task<ActionResult> UpdateDish([FromBody] DishUpdateRequest dishUpdateRequest)
+        {
+            var newDish = dishUpdateRequest.DishAddRequest.ToEntity();
+            try
+            {
+                await dishServices.UpdateDish(dishUpdateRequest.DishId, newDish);
+                await dishTypeServices.AddDishToTipologyAsync(dishUpdateRequest.DishAddRequest.TypeId, dishUpdateRequest.DishId);
+            }
+            catch (InvalidOperationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            return Ok("Dish Updated");
+        }
     }
 }

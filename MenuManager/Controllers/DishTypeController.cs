@@ -61,5 +61,21 @@ namespace MenuManager.Controllers
             }
             return Ok("DishType Deleted");
         }
+
+        // PUT: api/DishType/UpdateDishType
+        [HttpPut("UpdateDishType")]
+        public async Task<ActionResult> UpdateDishType([FromBody] DishTypeUpdateRequest dishTypeUpdateRequest)
+        {
+            var newDishType = dishTypeUpdateRequest.dishTypeAddRequest.ToEntity();
+            try
+            {
+                await dishTypeServices.UpdateDishType(dishTypeUpdateRequest.DishTypeId, newDishType);
+            }
+            catch (InvalidOperationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            return Ok("DishType Updated");
+        }
     }
 }
