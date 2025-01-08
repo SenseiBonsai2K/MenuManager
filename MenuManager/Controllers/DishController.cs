@@ -56,5 +56,20 @@ namespace MenuManager.Controllers
             }
             return Ok(dish.Name + "Added");
         }
+
+        // DELETE: api/Dish/DeleteDish
+        [HttpDelete("DeleteDish")]
+        public async Task<ActionResult> DeleteDish(int id)
+        {
+            try
+            {
+                await dishServices.DeleteDish(id);
+            }
+            catch (InvalidOperationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            return Ok("Dish Deleted");
+        }
     }
 }

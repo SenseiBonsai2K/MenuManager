@@ -24,5 +24,12 @@ namespace MenuManager.Services
             dishRepository.AddDish(dish);
             await dishRepository.SaveChanges();
         }
+
+        public async Task DeleteDish(int id)
+        {
+            var dish = await dishRepository.GetById(id);
+            dishRepository.Delete(dish);
+            await dishRepository.SaveChanges();
+        }
     }
 }
