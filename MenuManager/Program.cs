@@ -1,6 +1,7 @@
 
 using MenuManager.Models.Context;
 using MenuManager.Models.Repositories;
+using MenuManager.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace MenuManager
@@ -19,8 +20,14 @@ namespace MenuManager
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            // Add Repositories
             builder.Services.AddScoped<DishRepository>();
             builder.Services.AddScoped<DishTypeRepository>();
+
+            // Add Services
+            builder.Services.AddScoped<DishTypeServices>();
+            builder.Services.AddScoped<DishServices>();
 
             var app = builder.Build();
 

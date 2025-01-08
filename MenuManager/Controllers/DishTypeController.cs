@@ -8,19 +8,19 @@ namespace MenuManager.Controllers
     [ApiController]
     public class DishTypeController : Controller
     {
-        private readonly DishTypeRepository _context;
+        private readonly DishTypeRepository _dishTypeContext;
 
         public DishTypeController(DishTypeRepository context)
         {
-            _context = context;
+            _dishTypeContext = context;
         }
 
-        // GET: api/Dish
-        [HttpGet]
-        public async Task<ActionResult<List<DishTypeDTO>>> GetDishes()
+        // GET: api/DishType
+        [HttpGet("GetAll")]
+        public async Task<ActionResult<List<DishTypeDTO>>> GetAllDishTypes()
         {
             var dishTypes = new List<DishTypeDTO>();
-            foreach (var types in await _context.GetAllAsync())
+            foreach (var types in await _dishTypeContext.GetAll())
             {
                 dishTypes.Add(new DishTypeDTO(types));
             }

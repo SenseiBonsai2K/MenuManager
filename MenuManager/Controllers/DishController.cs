@@ -2,6 +2,8 @@
 using MenuManager.Models.Context;
 using MenuManager.Models.Entities;
 using MenuManager.Models.Repositories;
+using MenuManager.Requests;
+using MenuManager.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,23 +13,48 @@ namespace MenuManager.Controllers
     [ApiController]
     public class DishController : ControllerBase
     {
-        private readonly DishRepository _context;
+        private readonly DishServices dishServices;
+        private readonly DishTypeServices dishTypeServices;
 
-        public DishController(DishRepository context)
+        public DishController(DishServices dishServices, DishTypeServices dishTypeServices)
         {
-            _context = context;
+            this.dishServices = dishServices;
+            this.dishTypeServices = dishTypeServices;
         }
 
-        // GET: api/Dish
-        [HttpGet]
-        public async Task<ActionResult<List<DishDTO>>> GetDishes()
+        // GET: api/Dish/GetAll
+        [HttpGet("GetAll")]
+        public async Task<ActionResult<List<DishDTO>>> GetAllDishes()
         {
             var dishes = new List<DishDTO>();
-            foreach (var dish in await _context.GetAllAsync())
+            try
             {
-                dishes.Add(new DishDTO(dish));
+                foreach (var dish in await dishServices.GetAllDishes())
+                {
+                    dishes.Add(new DishDTO(dish));
+                }
+            }
+            catch (InvalidOperationException e)
+            {
+                return BadRequest(e.Message);
             }
             return Ok(dishes);
+        }
+
+        // POST: api/Dish/AddDish
+        [HttpPost("AddDish")]
+        public async Task<ActionResult> AddDish([FromBody] DishAddRequest dishAddRequest)
+        {
+            var dish = dishAddRequest.ToEntity();
+            try
+            {
+                await dishServices.AddDish(dish);
+            }
+            catch (InvalidOperationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            return Ok(dish.Name + "Added");
         }
     }
 }

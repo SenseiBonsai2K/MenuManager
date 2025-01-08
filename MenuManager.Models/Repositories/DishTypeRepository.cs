@@ -9,27 +9,18 @@ using System.Threading.Tasks;
 
 namespace MenuManager.Models.Repositories
 {
-    public class DishTypeRepository {
+    public class DishTypeRepository : GeneralRepository<DishType> {
 
-        public MyDbContext context;
+        public DishTypeRepository(MyDbContext _context) : base(_context) { }
 
-        public DishTypeRepository(MyDbContext context)
+        public async Task<DishType> GetByType(string type)
         {
-            this.context = context;
-        }
-        public async Task<IEnumerable<DishType>> GetAllAsync()
-        {
-            return await context.DishTypes.ToListAsync();
+            return await _context.DishTypes.FirstOrDefaultAsync(t => t.Type == type);
         }
 
-        public async Task<DishType> GetByTypologyAsync(string type)
-            {
-                return await context.DishTypes.FirstOrDefaultAsync(t => t.Type == type);
-            }
-
-        public async Task<bool> ExistByNameAsync(string name)
+        public async Task<bool> TypeExistsByName(string name)
         {
-            return await context.DishTypes.AnyAsync(t => t.Type == name);
+            return await _context.DishTypes.AnyAsync(t => t.Type == name);
         }
     }
 }

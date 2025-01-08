@@ -9,47 +9,28 @@ using System.Threading.Tasks;
 
 namespace MenuManager.Models.Repositories
 {
-    public class DishRepository 
+    public class DishRepository : GeneralRepository<Dish>
     {
-        public readonly MyDbContext context;
+        public DishRepository(MyDbContext _context) : base(_context) { }
 
-        public DishRepository(MyDbContext context)
+        public async Task<IEnumerable<Dish>> GetByType(string type)
         {
-            this.context = context;
+            return await _context.Dishes.Where(d => d.Type.Type.ToLower() == type.ToLower()).ToListAsync();
         }
 
-        public async Task <IEnumerable<Dish>> GetAllAsync()
+        public async Task<IEnumerable<Dish>> GetByTypeId(int typeId)
         {
-            return await context.Dishes.ToListAsync();
-        }
-
-        public async Task<IEnumerable<Dish>> GetByTypologyAsync(string type)
-        {
-            return await context.Dishes.Where(d => d.Type.Type.ToLower() == type.ToLower()).ToListAsync();
-        }
-
-        public async Task<IEnumerable<Dish>> GetByTypologyIdAsync(int typeId)
-        {
-            return await context.Dishes.Where(d => d.Type.Id == typeId).ToListAsync();
-        }
-
-        public async Task<IEnumerable<Dish>> GetWithPriceGreatherThanAsync(double price)
-        {
-            return await context.Dishes.Where(d => d.Price > price)
-                .OrderBy(d => d.Price)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Dish>> GetWithPriceLessThanAsync(double price)
-        {
-            return await context.Dishes.Where(d => d.Price < price)
-                .OrderBy(d => d.Price)
-                .ToListAsync();
+            return await _context.Dishes.Where(d => d.Type.Id == typeId).ToListAsync();
         }
 
         public async Task<IEnumerable<Dish>> GetByName(string name)
         {
-            return await context.Dishes.Where(d => d.Name.ToLower() == name.ToLower()).ToListAsync();
+            return await _context.Dishes.Where(d => d.Name.ToLower() == name.ToLower()).ToListAsync();
+        }
+
+        public async Task AddDish(Dish dish)
+        {
+            await _context.Dishes.AddAsync(dish);
         }
     }
 }

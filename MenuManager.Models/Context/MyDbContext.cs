@@ -15,6 +15,7 @@ namespace MenuManager.Models.Context
         public MyDbContext() : base() { }
      
         public DbSet<Entities.Dish> Dishes { get; set; }
+
         public DbSet<Entities.DishType> DishTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
