@@ -35,10 +35,6 @@ namespace MenuManager.Services
         {
             var dishType = await GetDishTypeById(dishTypeId);
             var dish = await dishRepository.GetById(dishId);
-            if (dish == null)
-            {
-                throw new InvalidOperationException("Dish not found");
-            }
             dishType.Dishes.Add(dish);
             await dishTypeRepository.SaveChanges();
         }

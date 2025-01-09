@@ -48,7 +48,7 @@ namespace MenuManager.Services
             } 
             dishToUpdate.Name = dish.Name;
             dishToUpdate.Price = dish.Price;
-            dishToUpdate.Id = dish.Id;
+            dishToUpdate.TypeId = dish.TypeId;
             await dishRepository.UpdateDish(dishToUpdate);
             await dishRepository.SaveChanges();
         }
