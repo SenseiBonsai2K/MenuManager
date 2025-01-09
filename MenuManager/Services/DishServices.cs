@@ -41,11 +41,20 @@ namespace MenuManager.Services
         public async Task UpdateDish(int Id, Dish dish)
         {
             var dishToUpdate = await dishRepository.GetById(Id);
-            var existingDishes = await dishRepository.GetDishesByName(dish.Name);
-            if (existingDishes.Count() > 1)
+            if (dishToUpdate == null)
             {
-                throw new InvalidOperationException("A Dish with the same name already exists.");
-            } 
+                throw new InvalidOperationException("Dish not found.");
+            }
+
+            if (dishToUpdate.Name != dish.Name)
+            {
+                var existingDishes = await dishRepository.GetDishesByName(dish.Name);
+                if (existingDishes.Any())
+                {
+                    throw new InvalidOperationException("A Dish with the same name already exists.");
+                }
+            }
+
             dishToUpdate.Name = dish.Name;
             dishToUpdate.Price = dish.Price;
             dishToUpdate.TypeId = dish.TypeId;
