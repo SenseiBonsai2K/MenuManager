@@ -42,7 +42,7 @@ namespace MenuManager.Services
         {
             var dishToUpdate = await dishRepository.GetById(Id);
             var existingDishes = await dishRepository.GetDishesByName(dish.Name);
-            if (existingDishes.Count()>1)
+            if (existingDishes.Count() > 1)
             {
                 throw new InvalidOperationException("A Dish with the same name already exists.");
             } 

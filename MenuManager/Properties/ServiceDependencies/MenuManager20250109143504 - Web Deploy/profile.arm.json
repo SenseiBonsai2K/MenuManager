@@ -21,7 +21,7 @@
     },
     "resourceName": {
       "type": "string",
-      "defaultValue": "menumanager20250109115027",
+      "defaultValue": "MenuManager20250109143504",
       "metadata": {
         "description": "Name of the main resource to be created by this template."
       }
