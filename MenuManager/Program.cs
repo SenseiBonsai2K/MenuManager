@@ -29,6 +29,8 @@ namespace MenuManager
             builder.Services.AddScoped<DishTypeServices>();
             builder.Services.AddScoped<DishServices>();
 
+            builder.WebHost.UseUrls("http://*:80");
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
