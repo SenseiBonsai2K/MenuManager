@@ -93,7 +93,7 @@ To get started with the project, follow these steps:
 
 1. Clone the repository.
    ```bash
-   git clone [https://github.com/SenseiBonsai2K/MenuManager.git](https://github.com/SenseiBonsai2K/MenuManager.git)
+   git clone https://github.com/SenseiBonsai2K/MenuManager.git
 2. Open the project in Visual Studio.
 3. Configure the database connection string in the appsettings.json file.
 4. Run the database migrations:
