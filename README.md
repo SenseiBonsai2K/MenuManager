@@ -91,18 +91,18 @@ The project relies on the following dependencies:
 
 To get started with the project, follow these steps:
 
-1. Clone the repository.
+1. Clone the repository:
    ```bash
    git clone https://github.com/SenseiBonsai2K/MenuManager.git
    ```
 2. Open the project in Visual Studio.
 3. Configure the database connection string in the appsettings.json file.
 4. Run the database migrations:
-  ```bash
-  dotnet ef migrations add InitialCreate
-  dotnet ef database update
-  ```
-
+   ```bash
+   dotnet ef migrations add InitialCreate
+   dotnet ef database update
+   ```
+   
 ## License
 This project is licensed under the terms of the **MIT license**. See the [LICENSE](LICENSE) file for more details.
 
