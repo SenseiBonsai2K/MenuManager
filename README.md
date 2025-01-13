@@ -91,10 +91,6 @@ The project relies on the following dependencies:
 
 To get started with the project, follow these steps:
 
-## Installation
-
-To get started with the project, follow these steps:
-
 1. Clone the repository.
    ```bash
    git clone [https://github.com/yourusername/MenuManager.git](https://github.com/SenseiBonsai2K/MenuManager.git)
@@ -107,4 +103,5 @@ To get started with the project, follow these steps:
   ```
 
 ## License
-This project is licensed under the terms of the MIT license. See the LICENSE file for more details.
+This project is licensed under the terms of the **MIT license**. See the [LICENSE](LICENSE) file for more details.
+
