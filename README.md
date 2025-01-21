@@ -1,6 +1,6 @@
 # MenuManager API
 
-This repository contains the API for the **MenuManager** project, a university project aimed at performing CRUD operations using a database hosted on Azure. The project is developed using **C#** and targets **.NET 8**. 
+This repository contains the API for the **MenuManager** project, a 'Cloud Computing' university project aimed at performing CRUD operations using a database hosted on Azure. The project is developed using **C#** and targets **.NET 8**. 
 The project is also hosted on Azure at the following link (until February 2025): [menumanager20250109143504.azurewebsites.net](https://menumanager20250109143504.azurewebsites.net).
 
 ## Project Structure
