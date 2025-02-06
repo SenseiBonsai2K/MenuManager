@@ -31,7 +31,7 @@ namespace MenuManager
                     {
                         Name = "Cristian Marinozzi",
                         Email = string.Empty,
-                        Url = new Uri("https://menumanager20250109143504.azurewebsites.net"),
+                        Url = new Uri("https://menumanagercloudexam.azurewebsites.net"),
                     },
                 });
             });
